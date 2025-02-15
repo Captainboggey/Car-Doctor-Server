@@ -64,6 +64,20 @@ app.post("/bookings", async(req,res)=>{
 
 })
 
+app.patch("/bookings/:id", async(req,res)=>{
+  const updatedBooking = req.body;
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)}
+  const updateDoc ={
+    $set:{
+      status: updatedBooking.status
+    }
+  }
+  const result = await bookingCollection.updateOne(filter,updateDoc)
+  res.send(result)
+
+})
+
 app.delete("/bookings/:id",async(req,res)=>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)};
